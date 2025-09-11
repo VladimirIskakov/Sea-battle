@@ -1,0 +1,1 @@
+export {ShipPlacementValidator} from './acceptable-cells'

@@ -1,0 +1,90 @@
+.menu {
+  width: 1024px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 80px 20px;
+  text-align: center;
+  background-color: rgba(165, 207, 224, 0.492);
+  border-radius: 2%;
+  // Элемент заголовка
+  &__title {
+    margin-bottom: 40px;
+    color: #333;
+    font-size: 2.5rem;
+  }
+  
+  // Элемент контейнера для кнопок
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  // Элемент кнопки (микс с блоком Button)
+  &__button {
+    width: 100%;
+  }
+}
+
+// Стили для экрана выбора доктрины
+.doctrine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  
+  &__title {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8rem;
+  }
+  
+  &__buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  &__button {
+    min-width: 120px;
+  }
+  
+  &__back {
+    margin-top: 20px;
+  }
+}
+
+// Стили для экрана мультиплеера
+.multiplayer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  
+  &__title {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8rem;
+  }
+  
+  &__buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  &__button {
+    min-width: 120px;
+  }
+  
+  &__back {
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,25 @@
+.ship {
+  border: 2px solid #000;
+  transition: all 0.3s ease;
+  
+  $ship-colors: #9534db, #2ecc71, #e73cd9, #f39c12;
+  
+  // Вертикальная ориентация (по умолчанию)
+  @for $i from 1 through 4 {
+    &__type#{$i} {
+      width: 30px;
+      height: 30px * $i;
+      background-color: nth($ship-colors, $i);
+    }
+  }
+  
+  // Горизонтальная ориентация
+  &_horizontal {
+    @for $i from 1 through 4 {
+      &.ship__type#{$i} {
+        width: 30px * $i;
+        height: 30px;
+      }
+    }
+  }
+}
