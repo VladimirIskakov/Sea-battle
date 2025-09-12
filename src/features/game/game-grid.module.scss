@@ -1,0 +1,93 @@
+// game-grid.module.scss
+.directionIndicator {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: black;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.grid {
+  display: inline-block;
+  border: 2px solid #2c3e50;
+  background-color: #ecf0f1;
+  user-select: none;
+  position: relative;
+
+  $ship-colors: #9534db, #2ecc71, #e73cd9, #f39c12;
+
+  &__header {
+    display: flex;
+  }
+  
+  &__corner {
+    width: 30px;
+    height: 30px;
+  }
+  
+  &__colHeader {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  &__row {
+    display: flex;
+  }
+  
+  &__rowHeader {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  &__cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #bdc3c7;
+    background-color: #64bbf5;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #2980b9;
+      cursor: pointer;
+    }
+    
+    &_hit {
+      background-color: #e74c3c;
+    }
+    
+    &_miss {
+      background-color: #ecf0f1;
+    }
+
+    &_highlight {
+    background-color: rgba(76, 175, 80, 0.5); 
+    border: 2px solid #4caf50;
+    }
+    
+    &_invalid {
+      background-color: rgba(244, 67, 54, 0.5);
+      border: 2px solid #f44336;
+    }
+
+    @for $i from 1 through 4 {
+      &_ship#{$i} {
+        border: 2px solid #00000047;
+        background-color: nth($ship-colors, $i);
+      }
+    }
+}
+
+}

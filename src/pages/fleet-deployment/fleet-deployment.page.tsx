@@ -2,8 +2,10 @@ import { GameGridPlacement } from '@/features/fleet-deployment/ship-field-placem
 import { ShipDnd } from '@/features';
 import styles from './fleet-deployment.module.scss'
 import { useState, useEffect } from 'react';
-import { placeMyShip, resetMyGame, store } from '@/entities';
+import { placeMyShip, randomEnemyField, randomMyField, resetMyGame, store } from '@/entities';
 import { CustomButton } from '@/shared/ui';
+import { changeMyReadyMode } from '@/entities/store/store';
+import { useNavigate } from "react-router-dom";
 
 
 export function FleetDeployment() {
@@ -11,6 +13,8 @@ export function FleetDeployment() {
   const [shipDirection, setShipDirection] = useState<'vertical' | 'horizontal'>('horizontal');
 
   const [battlefield, setBattlefield] = useState(store.getState().myBattlefield);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
@@ -20,8 +24,6 @@ export function FleetDeployment() {
     return unsubscribe;
   }, []);
 
-
-  // Обработчик нажатия клавиш
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
         console.log(e.key)
@@ -57,6 +59,16 @@ export function FleetDeployment() {
   const handleReset = () => {
       store.dispatch(resetMyGame())
   }
+
+  const handleRandom = () => {
+    store.dispatch(randomMyField())
+  }
+
+  const hadnlerStart = () => {
+    store.dispatch(randomEnemyField())
+    store.dispatch(changeMyReadyMode())
+    if (store.getState().myBattlefield.readyForBattle == true && store.getState().enemyBattlefield.readyForBattle == true) navigate('/game');
+  }
   
   return (
     <div className={styles.fleetDeployment}>
@@ -70,7 +82,7 @@ export function FleetDeployment() {
           </CustomButton>
           <CustomButton 
             className={styles.fleetDeployment__button} 
-            onClick={handleReset}
+            onClick={handleRandom}
           >
             Случайное расположение
           </CustomButton>
@@ -109,6 +121,7 @@ export function FleetDeployment() {
       <CustomButton 
         disabled={battlefield.numberShips === 10 ? false : true} 
         className={styles.fleetDeployment__start}
+        onClick={hadnlerStart}
       >
         Начать
       </CustomButton>

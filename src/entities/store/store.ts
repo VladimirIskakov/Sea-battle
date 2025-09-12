@@ -1,3 +1,4 @@
+import { ShipPlacementValidator } from '@/shared/utils';
 import { configureStore, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type Cell = {
@@ -34,7 +35,61 @@ const createInitialField = (): Battlefield => {
     field.push(row);
   }
   
-  return field;
+  return field
+};
+
+
+const initialRandomState = (): BattlefieldState => {
+  const state: BattlefieldState = createInitialState();
+
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  state.ships.slice().reverse().forEach((ship, reversedIndex) => {
+    const shipLength = 4 - reversedIndex; 
+    
+    let attempts = 0;
+    const maxAttempts = 1000; 
+    
+    while (ship.count > 0 && attempts < maxAttempts) {
+      attempts++;
+      
+      const x = getRandomInt(0, 9);
+      const y = getRandomInt(0, 9);
+      const direction = getRandomInt(0, 1) === 0 ? 'vertical' : 'horizontal';
+      
+      const validator = new ShipPlacementValidator(
+        state.field,  
+        10,          
+        10,         
+        { x, y },   
+        shipLength,   
+        direction    
+      );
+      
+      if (validator.isCurrentPlacementValid()) {
+        console.log(x,y,shipLength, direction)
+        for (let i = 0; i < shipLength; i++) {
+          const cellX = direction === 'horizontal' ? x + i : x;
+          const cellY = direction === 'vertical' ? y + i : y;
+          state.field[cellX][cellY].hasShip = shipLength;
+        }
+        
+        ship.count -= 1;
+        state.numberShips += 1;
+        attempts = 0;  
+      }
+    }
+    
+    if (ship.count > 0) {
+      console.warn(`Не удалось разместить ${ship.count} кораблей длиной ${shipLength} после ${maxAttempts} попыток.`);
+    }
+  });
+
+  return state;
 };
 
 type ShipLength = 1 | 2 | 3 | 4;
@@ -48,16 +103,16 @@ const createInitialShips = (): { length: ShipLength; count: number }[] => {
   ];
 };
 
-const initialState: BattlefieldState = {
-  field: createInitialField(),
+const createInitialState = (): BattlefieldState => ({
+  field: createInitialField(),  
   numberShips: 0,
-  ships: createInitialShips(),
+  ships: createInitialShips(), 
   readyForBattle: false,
-}
+});
 
 const myBattlefield = createSlice({
   name: 'myBattlefield',
-  initialState,
+  initialState: createInitialState(),
   reducers: {
     placeShip: (state, action: PayloadAction<{ x: number; y: number; shipLength: number; direction: 'vertical' | 'horizontal' }>) => {
         const {x, y, shipLength, direction} = action.payload;
@@ -76,12 +131,25 @@ const myBattlefield = createSlice({
       state.ships = createInitialShips();
       state.readyForBattle = false
     },
+
+    randomField: (state) => {
+      const newState = initialRandomState();
+      
+      state.field = newState.field;
+      state.numberShips = newState.numberShips;
+      state.ships = newState.ships;
+      state.readyForBattle = newState.readyForBattle;
+    },
+
+    changeReadyMode: (state) => {
+      state.readyForBattle = !state.readyForBattle
+    }
   },
 });
 
 const enemyBattlefield = createSlice({
   name: 'enemyBattlefield',
-  initialState,
+  initialState: initialRandomState(),
   reducers: {
     placeShip: (state, action: PayloadAction<{ x: number; y: number; shipLength: number; direction: 'vertical' | 'horizontal' }>) => {
         const {x, y, shipLength, direction} = action.payload;
@@ -101,11 +169,20 @@ const enemyBattlefield = createSlice({
       state.ships = createInitialShips();
       state.readyForBattle = false
     },
+
+    randomField: (state) => {
+      const newState = initialRandomState();
+      
+      state.field = newState.field;
+      state.numberShips = newState.numberShips;
+      state.ships = newState.ships;
+      state.readyForBattle = true;
+    }
   },
 });
 
-export const { placeShip: placeMyShip, resetGame: resetMyGame } = myBattlefield.actions;
-export const { placeShip: placeEnemyShip, resetGame: resetEnemyGame } = enemyBattlefield.actions;
+export const { placeShip: placeMyShip, resetGame: resetMyGame, randomField: randomMyField, changeReadyMode: changeMyReadyMode } = myBattlefield.actions;
+export const { placeShip: placeEnemyShip, resetGame: resetEnemyGame, randomField: randomEnemyField } = enemyBattlefield.actions;
 
 export const store = configureStore({
   reducer: {

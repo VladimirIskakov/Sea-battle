@@ -50,7 +50,7 @@ export function GameGridPlacement({battlefield, onCellDrop, draggingShipLength =
 
   const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    if (!hoverCell) return;
+    if (!hoverCell ) return;
     
     const shipLength = parseInt(e.dataTransfer.getData('shipLength'));
     onCellDrop(hoverCell.x, hoverCell.y, shipLength, shipDirection, validator.isCurrentPlacementValid);

@@ -1,1 +1,1 @@
-export {ShipPlacementValidator} from './acceptable-cells'
+export {ShipPlacementValidator, hasShipInCellExtended} from './acceptable-cells'

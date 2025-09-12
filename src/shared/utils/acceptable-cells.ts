@@ -79,3 +79,8 @@ export class ShipPlacementValidator {
     };
 
 }
+
+export const hasShipInCellExtended = (battlefield: Cell[][], x: number, y: number, rows: number, cols: number) =>{
+    if (y >= rows || x >= cols) return false;
+    return battlefield[x][y].hasShip !== null;
+  }
