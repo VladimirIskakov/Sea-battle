@@ -4,25 +4,20 @@ import styles from './fleet-deployment.module.scss'
 import { useState, useEffect } from 'react';
 import { placeMyShip, randomEnemyField, randomMyField, resetMyGame, store } from '@/entities';
 import { CustomButton } from '@/shared/ui';
-import { changeMyReadyMode } from '@/entities/store/store';
+import { addLog, changeMyReadyMode, selectMyBattlefield } from '@/entities/store/store';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export function FleetDeployment() {
   const [draggingShipLength, setDraggingShipLength] = useState<number | null>(null);
   const [shipDirection, setShipDirection] = useState<'vertical' | 'horizontal'>('horizontal');
 
-  const [battlefield, setBattlefield] = useState(store.getState().myBattlefield);
+  const dispatch = useDispatch();
+
+  const battlefield = useSelector(selectMyBattlefield);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      setBattlefield(store.getState().myBattlefield);
-    });
-
-    return unsubscribe;
-  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -40,7 +35,7 @@ export function FleetDeployment() {
   const handleCellDrop = (x: number, y: number, shipLength: number, direction: 'vertical' | 'horizontal', isCurrentPlacementValid: () => boolean) => {
     const colLetter = String.fromCharCode(65 + x);
     console.log(`Корабль длиной ${shipLength} помещен в клетку ${colLetter}${y + 1} с направлением ${direction} ${isCurrentPlacementValid()}`);
-    if (isCurrentPlacementValid()) store.dispatch(placeMyShip({
+    if (isCurrentPlacementValid()) dispatch(placeMyShip({
       x: x,
       y: y,
       shipLength: shipLength,
@@ -57,16 +52,18 @@ export function FleetDeployment() {
   };
 
   const handleReset = () => {
-      store.dispatch(resetMyGame())
+      dispatch(resetMyGame())
   }
 
   const handleRandom = () => {
-    store.dispatch(randomMyField())
+    dispatch(randomMyField())
   }
 
   const hadnlerStart = () => {
-    store.dispatch(randomEnemyField())
-    store.dispatch(changeMyReadyMode())
+    dispatch(randomEnemyField())
+    dispatch(changeMyReadyMode())
+    dispatch(addLog('Вы готовы к бою'));
+    dispatch(addLog('Противник готов'));
     if (store.getState().myBattlefield.readyForBattle == true && store.getState().enemyBattlefield.readyForBattle == true) navigate('/game');
   }
   

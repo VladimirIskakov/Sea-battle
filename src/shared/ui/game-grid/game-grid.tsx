@@ -1,25 +1,30 @@
-import { useRef } from 'react';
 import styles from './game-grid.module.scss';
-import type { BattlefieldState } from '@/entities';
-import { hasShipInCellExtended } from '@/shared/utils';
 
 interface GameGridProps {
-  battlefield: BattlefieldState,
-  hidden?: boolean,
-  enemy?: boolean
+  getCellStatus: (x: number, y: number) => {hasShip: number | null, isHighlighted: boolean, isValid: boolean};
+  shipDirection?: 'vertical' | 'horizontal' ;
+  hidden?: boolean;
+  handleDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
+  setHoverCell?: (value: { x: number; y: number } | null) => void;
 }
 
-export function GameGrid({battlefield, hidden = false, enemy = false}: GameGridProps) {
+export function GameGrid({getCellStatus, hidden = false, handleDragOver, handleDrop, setHoverCell}: GameGridProps) {
   const rows = 10;
   const cols = 10;
-  const gridRef = useRef<HTMLDivElement>(null);
 
+  const renderCell = (x: number, y: number) => {
+    const cellStatus = getCellStatus(x, y)
+
+    const cellClasses = `${!(cellStatus.hasShip != null) ? (cellStatus.isHighlighted ? (cellStatus.isValid ? styles.grid__cell_highlight : styles.grid__cell_invalid) : '') : styles[`grid__cell_ship${cellStatus.hasShip}`]}`
+    return cellClasses;
+  }
 
   return (
     <div 
       className={styles.grid}
-      ref={gridRef}
     >
+      
       {/* Заголовок с буквами */}
       <div className={styles.grid__header}>
         <div className={styles.grid__corner}></div>
@@ -40,14 +45,7 @@ export function GameGrid({battlefield, hidden = false, enemy = false}: GameGridP
           
           {/* Клетки ряда */}
           {Array.from({ length: cols }, (_, colIndex) => {
-            const hasShip = hasShipInCellExtended(battlefield.field, colIndex, rowIndex, rows, cols,);
-            const cellClasses = `${styles.grid__cell} 
-            ${
-              !hasShip ?  '' : 
-              ( !hidden ? styles[`grid__cell_ship${battlefield.field[colIndex][rowIndex].hasShip}`] 
-                : 
-              '')
-            }`;
+            const cellClasses = `${styles.grid__cell} ${ !hidden ? renderCell(colIndex, rowIndex) : ''}`;
             
             return (
               <div
@@ -55,6 +53,9 @@ export function GameGrid({battlefield, hidden = false, enemy = false}: GameGridP
                 className={cellClasses}
                 data-x={colIndex}
                 data-y={rowIndex}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onDragLeave={setHoverCell ? () => setHoverCell(null) : undefined}
               />
             );
           })}

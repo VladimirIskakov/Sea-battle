@@ -4,11 +4,11 @@ export class ShipPlacementValidator {
   private battlefield: Cell[][];
   private rows: number;
   private cols: number;
-  private hoverCell: {x: number, y: number} | null;
+  private hoverCell?: {x: number, y: number} | null;
   private draggingShipLength?: number | null;
-  private direction: 'vertical' | 'horizontal';
+  private direction?: 'vertical' | 'horizontal';
 
-  constructor(battlefield: Cell[][], rows: number, cols: number, hoverCell: {x: number, y: number} | null,  draggingShipLength: number | null, direction: 'vertical' | 'horizontal') {
+  constructor(battlefield: Cell[][], rows: number, cols: number, hoverCell: {x: number, y: number} | null = null,  draggingShipLength: number | null = null, direction: 'vertical' | 'horizontal' = 'horizontal') {
     this.battlefield = battlefield;
     this.rows = rows;
     this.cols = cols;
@@ -17,9 +17,9 @@ export class ShipPlacementValidator {
     this.direction = direction;
   }
 
-  hasShipInCell(x: number, y: number): boolean {
-    if (y >= this.rows || x >= this.cols) return false;
-    return this.battlefield[x][y].hasShip !== null;
+  hasShipInCell(x: number, y: number): number | null {
+    if (y >= this.rows || x >= this.cols) return null;
+    return this.battlefield[x][y].hasShip;
   }
 
   hasShipInLine(x: number, y: number): boolean {
@@ -33,7 +33,7 @@ export class ShipPlacementValidator {
           
           if (nx < 0 || nx >= this.cols || ny < 0 || ny >= this.rows) continue;
           
-          if (this.hasShipInCell(nx, ny)) {
+          if (this.hasShipInCell(nx, ny) != null) {
             return true;
           }
         }
@@ -77,6 +77,14 @@ export class ShipPlacementValidator {
             x < this.hoverCell.x + this.draggingShipLength;
     }
     };
+
+    getCellStatus = (x: number, y: number) => {
+      const hasShip = this.hasShipInCell(x, y);
+      const isHighlighted = this.shouldHighlightCell(x, y);
+      const isValid = this.isCurrentPlacementValid();
+
+      return {hasShip, isHighlighted, isValid};
+  }
 
 }
 

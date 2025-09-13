@@ -181,16 +181,40 @@ const enemyBattlefield = createSlice({
   },
 });
 
+interface LogsStoreState {
+  logs: string[];
+}
+
+const initialState: LogsStoreState = {
+  logs: [],
+};
+
+const logsStore = createSlice({
+  name: 'logsStore',
+  initialState,
+  reducers: {
+    addLog: (state, action: PayloadAction<string>) => {
+      state.logs.push(action.payload);
+    },
+  },
+});
+
+export const { addLog } = logsStore.actions;
 export const { placeShip: placeMyShip, resetGame: resetMyGame, randomField: randomMyField, changeReadyMode: changeMyReadyMode } = myBattlefield.actions;
 export const { placeShip: placeEnemyShip, resetGame: resetEnemyGame, randomField: randomEnemyField } = enemyBattlefield.actions;
 
 export const store = configureStore({
   reducer: {
     myBattlefield: myBattlefield.reducer,
-    enemyBattlefield: enemyBattlefield.reducer
+    enemyBattlefield: enemyBattlefield.reducer,
+    logsStore: logsStore.reducer,
   },
 });
 
+export const selectMyBattlefield = (state: RootState) => state.myBattlefield;
+export const selectEnemyBattlefield = (state: RootState) => state.enemyBattlefield;
+export const selectLogsStore = (state: RootState) => state.logsStore;
+;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type { Cell, Battlefield, BattlefieldState };
