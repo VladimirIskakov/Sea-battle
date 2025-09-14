@@ -4,15 +4,37 @@
   overflow-y: auto;
   background-color: #eee;
   border: 2px solid #7c7c7c;
-  color: #454545;
+  
   padding: 5px 15px 5px 15px;
   font-family: monospace;
   font-size: 14px;
   border-radius: 6px;
+
+  &__empty{
+    color: #454545;
+  }
+
+  &__item{
+    font-weight: 800;
+    margin: 0;
+
+  &_common{
+    color: #454545;
+  }
   
+  &_enemy{
+    color: #a31313;
+  }
+
+  &_myAction{
+    color: #189c4d;
+  }
+
+  &_win{
+    color: #7a1c9d;
+  }
+  
+  }
+
 }
 
-.gameLogItem {
-  font-weight: 800;
-  margin-bottom: 0;
-}

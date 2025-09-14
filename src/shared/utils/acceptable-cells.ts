@@ -82,8 +82,10 @@ export class ShipPlacementValidator {
       const hasShip = this.hasShipInCell(x, y);
       const isHighlighted = this.shouldHighlightCell(x, y);
       const isValid = this.isCurrentPlacementValid();
+      const isMissed = this.battlefield[x][y].isMissed 
+      const isHit = this.battlefield[x][y].isHit
 
-      return {hasShip, isHighlighted, isValid};
+      return {hasShip, isHighlighted, isValid, isMissed, isHit};
   }
 
 }

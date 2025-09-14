@@ -1,5 +1,6 @@
 import { ShipPlacementValidator } from '@/shared/utils';
 import { configureStore, createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { fireOnCellLogic } from './store-logic';
 
 type Cell = {
   x: number,
@@ -161,8 +162,14 @@ const enemyBattlefield = createSlice({
         }
         state.ships[shipLength-1]['count'] -= 1
         state.numberShips += 1
-        }
+      }
     },
+
+    fireOnCell: (state, action: PayloadAction<{x: number, y: number}>) => {
+      const {x, y} = action.payload;
+      fireOnCellLogic(state, x, y)
+    },
+
     resetGame: (state) => {
       state.field = createInitialField();
       state.numberShips = 0;
@@ -181,8 +188,10 @@ const enemyBattlefield = createSlice({
   },
 });
 
+type LogsType = '_common' | '_enemy' |  '_myAction' | '_win'
+
 interface LogsStoreState {
-  logs: string[];
+  logs: {log: string, type: LogsType }[];
 }
 
 const initialState: LogsStoreState = {
@@ -193,7 +202,7 @@ const logsStore = createSlice({
   name: 'logsStore',
   initialState,
   reducers: {
-    addLog: (state, action: PayloadAction<string>) => {
+    addLog: (state, action: PayloadAction<{log: string, type: LogsType }>) => {
       state.logs.push(action.payload);
     },
   },
@@ -201,7 +210,7 @@ const logsStore = createSlice({
 
 export const { addLog } = logsStore.actions;
 export const { placeShip: placeMyShip, resetGame: resetMyGame, randomField: randomMyField, changeReadyMode: changeMyReadyMode } = myBattlefield.actions;
-export const { placeShip: placeEnemyShip, resetGame: resetEnemyGame, randomField: randomEnemyField } = enemyBattlefield.actions;
+export const { placeShip: placeEnemyShip,  fireOnCell: fireOnEnemyCell, resetGame: resetEnemyGame, randomField: randomEnemyField } = enemyBattlefield.actions;
 
 export const store = configureStore({
   reducer: {

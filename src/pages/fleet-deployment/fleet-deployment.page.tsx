@@ -62,8 +62,8 @@ export function FleetDeployment() {
   const hadnlerStart = () => {
     dispatch(randomEnemyField())
     dispatch(changeMyReadyMode())
-    dispatch(addLog('Вы готовы к бою'));
-    dispatch(addLog('Противник готов'));
+    dispatch(addLog({log: 'Вы готовы к бою', type: '_common'}));
+    dispatch(addLog({log: 'Противник готов', type: '_common'}));
     if (store.getState().myBattlefield.readyForBattle == true && store.getState().enemyBattlefield.readyForBattle == true) navigate('/game');
   }
   

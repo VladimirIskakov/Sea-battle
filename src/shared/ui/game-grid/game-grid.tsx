@@ -1,7 +1,8 @@
 import styles from './game-grid.module.scss';
 
-interface GameGridProps {
-  getCellStatus: (x: number, y: number) => {hasShip: number | null, isHighlighted: boolean, isValid: boolean};
+interface GameGridProps{
+  onCellClick?: (x: number, y: number) => void;
+  getCellStatus: (x: number, y: number) => {hasShip: number | null, isHighlighted: boolean, isValid: boolean, isMissed: boolean, isHit: boolean};
   shipDirection?: 'vertical' | 'horizontal' ;
   hidden?: boolean;
   handleDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -9,14 +10,19 @@ interface GameGridProps {
   setHoverCell?: (value: { x: number; y: number } | null) => void;
 }
 
-export function GameGrid({getCellStatus, hidden = false, handleDragOver, handleDrop, setHoverCell}: GameGridProps) {
+export function GameGrid({onCellClick, getCellStatus, hidden = false, handleDragOver, handleDrop, setHoverCell}: GameGridProps) {
   const rows = 10;
   const cols = 10;
 
   const renderCell = (x: number, y: number) => {
     const cellStatus = getCellStatus(x, y)
 
-    const cellClasses = `${!(cellStatus.hasShip != null) ? (cellStatus.isHighlighted ? (cellStatus.isValid ? styles.grid__cell_highlight : styles.grid__cell_invalid) : '') : styles[`grid__cell_ship${cellStatus.hasShip}`]}`
+    const cellClasses = `
+    ${!hidden && cellStatus.isHighlighted ? (cellStatus.isValid ? styles.grid__cell_highlight : styles.grid__cell_invalid) : ''}
+    ${!hidden && (cellStatus.hasShip != null) ? styles[`grid__cell_ship${cellStatus.hasShip}`] : ''}
+    ${cellStatus.isMissed ? styles.grid__cell_miss : ''}
+    ${cellStatus.isHit ? styles.grid__cell_hit : ''}
+    `
     return cellClasses;
   }
 
@@ -45,7 +51,7 @@ export function GameGrid({getCellStatus, hidden = false, handleDragOver, handleD
           
           {/* Клетки ряда */}
           {Array.from({ length: cols }, (_, colIndex) => {
-            const cellClasses = `${styles.grid__cell} ${ !hidden ? renderCell(colIndex, rowIndex) : ''}`;
+            const cellClasses = `${styles.grid__cell} ${renderCell(colIndex, rowIndex)}`;
             
             return (
               <div
@@ -53,6 +59,7 @@ export function GameGrid({getCellStatus, hidden = false, handleDragOver, handleD
                 className={cellClasses}
                 data-x={colIndex}
                 data-y={rowIndex}
+                onClick={() => onCellClick?.(colIndex, rowIndex)}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
                 onDragLeave={setHoverCell ? () => setHoverCell(null) : undefined}

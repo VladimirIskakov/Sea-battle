@@ -66,10 +66,12 @@
     
     &_hit {
       background-color: #e74c3c;
+      border: 4px solid #72150b;
     }
     
     &_miss {
-      background-color: #ecf0f1;
+      background-color: #45afc9;
+      border: 6px solid #ecf0f1;
     }
 
     &_highlight {
@@ -79,11 +81,6 @@
     
     &_invalid {
       background-color: rgba(244, 67, 54, 0.5);
-      border: 2px solid #f44336;
-    }
-
-    &_shop2{
-        background-color: rgba(244, 67, 54, 0.5);
       border: 2px solid #f44336;
     }
 

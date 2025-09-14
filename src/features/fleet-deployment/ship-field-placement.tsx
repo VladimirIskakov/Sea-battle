@@ -51,11 +51,6 @@ export function GameGridPlacement({battlefield, onCellDrop, draggingShipLength =
       className={styles.gameGridPlacement}
     >
 
-      {/* Индикатор направления */}
-      <div className={styles.directionIndicator}>
-        Направление: {shipDirection === 'vertical' ? 'Вертикальное' : 'Горизонтальное'} (R для смены)
-      </div>
-
       <GameGrid handleDragOver = {handleDragOver} handleDrop = {handleDrop} setHoverCell={setHoverCell} getCellStatus={onCellStatusGet}/>
       
       

@@ -6,31 +6,25 @@ import { ShipPlacementValidator } from '@/shared/utils';
 
 
 interface GameGridProps {
+  onCellClick?: (x: number, y: number) => void;
   title?: string,
   battlefield: BattlefieldState,
   hidden?: boolean,
-  enemy?: boolean
 }
 
-export function GameGridActive({title, battlefield, hidden = false, enemy = false}: GameGridProps) {
+export function GameGridActive({onCellClick, title, battlefield, hidden = false}: GameGridProps) {
   const rows = 10;
   const cols = 10;
   const validator = new ShipPlacementValidator(battlefield.field, rows, cols);
 
-const renderCell = (x: number, y: number) => {
-  const hasShip = validator.hasShipInCell(x, y);
-  const cellClasses = `${!hasShip ?  '' : styles[`grid__cell_ship${battlefield.field[x][y].hasShip}`]}`
-  return cellClasses;
-}
-
-const onCellStatusGet = (x: number, y: number) => validator.getCellStatus(x, y);
+  const onCellStatusGet = (x: number, y: number) => validator.getCellStatus(x, y);
 
   return (
     <div 
       className={styles.gameGridActive}
     >
       <h2>{title}</h2>
-      <GameGrid getCellStatus={onCellStatusGet} hidden={hidden}/>
+      <GameGrid onCellClick={onCellClick} getCellStatus={onCellStatusGet} hidden={hidden}/>
     </div>
   );
 }

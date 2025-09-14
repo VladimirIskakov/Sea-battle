@@ -1,25 +1,29 @@
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import styles from './game-logs.module.scss'; // или ваш файл стилей
+import styles from './game-logs.module.scss';
 import { selectLogsStore } from '@/entities/store/store';
-import { useEffect } from 'react';
 
 export const GameLogs = () => {
-
   const logs = useSelector(selectLogsStore);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{
-        console.log(logs)
-  }, [logs]
-)
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [logs.logs]);
 
   return (
-    <div className={styles.gameLogs}>
+    <div ref={containerRef} className={styles.gameLogs}>
       {logs.logs.length === 0 ? (
-        <div className={styles.gameLogEmpty}>Логов пока нет</div>
+        <div className={styles.gameLogs_empty}>Логов пока нет</div>
       ) : (
-        logs.logs.map((log, index) => (
-          <div key={index} className={styles.gameLogItem}>
-            {log}
+        logs.logs.map((logElem, index) => (
+          <div
+            key={index}
+            className={`${styles.gameLogs__item} ${styles[`gameLogs__item${logElem.type}`]}`}
+          >
+            {logElem.log}
           </div>
         ))
       )}
