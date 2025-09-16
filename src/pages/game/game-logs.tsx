@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './game-logs.module.scss';
-import { selectLogsStore } from '@/entities/store/store';
+import { selectLogsStore } from '@/shared/store';
 
 export const GameLogs = () => {
   const logs = useSelector(selectLogsStore);
@@ -30,3 +30,4 @@ export const GameLogs = () => {
     </div>
   );
 };
+

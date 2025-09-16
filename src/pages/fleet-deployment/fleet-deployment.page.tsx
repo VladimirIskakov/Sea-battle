@@ -2,20 +2,26 @@ import { GameGridPlacement } from '@/features/fleet-deployment/ship-field-placem
 import { ShipDnd } from '@/features';
 import styles from './fleet-deployment.module.scss'
 import { useState, useEffect } from 'react';
-import { placeMyShip, randomEnemyField, randomMyField, resetMyGame, store } from '@/entities';
 import { CustomButton } from '@/shared/ui';
-import { addLog, changeMyReadyMode, selectMyBattlefield } from '@/entities/store/store';
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { 
+  prepareGame, 
+  selectEnemyBattlefield, 
+  selectMyBattlefield, 
+  useAppDispatch,
+ } from '@/shared/store';
+import { placeMyShip, randomMyField, resetMyGame } from '@/entities';
 
 
 export function FleetDeployment() {
   const [draggingShipLength, setDraggingShipLength] = useState<number | null>(null);
   const [shipDirection, setShipDirection] = useState<'vertical' | 'horizontal'>('horizontal');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const battlefield = useSelector(selectMyBattlefield);
+  const myBattlefield = useSelector(selectMyBattlefield);
+  const enemyBattlefield = useSelector(selectEnemyBattlefield);
 
   const navigate = useNavigate();
 
@@ -59,13 +65,16 @@ export function FleetDeployment() {
     dispatch(randomMyField())
   }
 
-  const hadnlerStart = () => {
-    dispatch(randomEnemyField())
-    dispatch(changeMyReadyMode())
-    dispatch(addLog({log: 'Вы готовы к бою', type: '_common'}));
-    dispatch(addLog({log: 'Противник готов', type: '_common'}));
-    if (store.getState().myBattlefield.readyForBattle == true && store.getState().enemyBattlefield.readyForBattle == true) navigate('/game');
-  }
+  useEffect(() => {
+    console.log(myBattlefield.readyForBattle, enemyBattlefield.readyForBattle)
+  if (myBattlefield.readyForBattle && enemyBattlefield.readyForBattle) {
+      navigate('/game');
+    }
+  }, [myBattlefield.readyForBattle, enemyBattlefield.readyForBattle, navigate]);
+
+  const handlerStart = () => {
+    dispatch(prepareGame());
+  };
   
   return (
     <div className={styles.fleetDeployment}>
@@ -87,7 +96,7 @@ export function FleetDeployment() {
         
 
           <GameGridPlacement
-            battlefield={battlefield}
+            battlefield={myBattlefield}
             onCellDrop={handleCellDrop} 
             draggingShipLength={draggingShipLength}
             shipDirection={shipDirection}
@@ -95,7 +104,7 @@ export function FleetDeployment() {
           
           <div className={styles.fleetDeployment__ships}>
               {
-              battlefield.ships.map((ship, shipIndex) => (
+              myBattlefield.ships.map((ship, shipIndex) => (
                 <div 
                   key={`group-${ship.length}-${shipIndex}`} 
                   className={styles.fleetDeployment__group}
@@ -116,9 +125,9 @@ export function FleetDeployment() {
       </div>
       
       <CustomButton 
-        disabled={battlefield.numberShips === 10 ? false : true} 
+        disabled={myBattlefield.numberShips === 10 ? false : true} 
         className={styles.fleetDeployment__start}
-        onClick={hadnlerStart}
+        onClick={handlerStart}
       >
         Начать
       </CustomButton>

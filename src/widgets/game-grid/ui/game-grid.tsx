@@ -16,12 +16,11 @@ export function GameGrid({onCellClick, getCellStatus, hidden = false, handleDrag
 
   const renderCell = (x: number, y: number) => {
     const cellStatus = getCellStatus(x, y)
-
+    
     const cellClasses = `
     ${!hidden && cellStatus.isHighlighted ? (cellStatus.isValid ? styles.grid__cell_highlight : styles.grid__cell_invalid) : ''}
-    ${!hidden && (cellStatus.hasShip != null) ? styles[`grid__cell_ship${cellStatus.hasShip}`] : ''}
+    ${!cellStatus.isHit ? (!hidden && (cellStatus.hasShip != null) ? styles[`grid__cell_ship${cellStatus.hasShip}`] : '') : styles.grid__cell_hit}
     ${cellStatus.isMissed ? styles.grid__cell_miss : ''}
-    ${cellStatus.isHit ? styles.grid__cell_hit : ''}
     `
     return cellClasses;
   }

@@ -1,4 +1,4 @@
-import type { Cell } from "@/entities";
+import type { Cell } from "@/shared/store";
 
 export class ShipPlacementValidator {
   private battlefield: Cell[][];

@@ -28,5 +28,5 @@
       "root/*": ["./*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "widgets/game-grid"]
 }

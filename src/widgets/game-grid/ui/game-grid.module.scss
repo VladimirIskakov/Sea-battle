@@ -1,4 +1,5 @@
-// game-grid.module.scss
+@use "sass:list";
+
 .directionIndicator {
   position: absolute;
   top: -30px;
@@ -55,7 +56,7 @@
   &__cell {
     width: 30px;
     height: 30px;
-    border: 1px solid #bdc3c7;
+    //border: 1px solid #bdc3c7;
     background-color: #64bbf5;
     transition: all 0.2s ease;
     
@@ -70,8 +71,8 @@
     }
     
     &_miss {
-      background-color: #45afc9;
-      border: 6px solid #ecf0f1;
+      background-color: #ecf0f1;
+      border: 6px solid #45afc9;
     }
 
     &_highlight {
@@ -87,7 +88,7 @@
     @for $i from 1 through 4 {
       &_ship#{$i} {
         border: 2px solid #00000047;
-        background-color: nth($ship-colors, $i);
+        background-color: list.nth($ship-colors, $i);
       }
     }
 }

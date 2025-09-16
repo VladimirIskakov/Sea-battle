@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import styles from './ship-field-placement.module.scss';
-import type { BattlefieldState } from '@/entities';
+import type { BattlefieldState } from '@/shared/store/types';
 import { ShipPlacementValidator } from '@/shared/utils';
-import { GameGrid } from '@/shared/ui';
+import { GameGrid } from '@/widgets';
 
 interface GameGridPlacementProps {
   battlefield: BattlefieldState,
@@ -19,7 +19,6 @@ export function GameGridPlacement({battlefield, onCellDrop, draggingShipLength =
 
   const validator = new ShipPlacementValidator(battlefield.field, rows, cols, hoverCell, draggingShipLength, shipDirection);
 
-  // Обработчик для определения клетки под курсором
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
 

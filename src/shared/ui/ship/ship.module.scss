@@ -1,3 +1,5 @@
+@use "sass:list";
+
 .ship {
   border: 2px solid #000;
   transition: all 0.3s ease;
@@ -9,7 +11,7 @@
     &__type#{$i} {
       width: 30px;
       height: 30px * $i;
-      background-color: nth($ship-colors, $i);
+      background-color: list.nth($ship-colors, $i);
     }
   }
   

@@ -1,8 +1,7 @@
+import type { BattlefieldState } from '@/shared/store/types';
 import styles from './game-grid-active.module.scss';
-import type { BattlefieldState, Cell } from '@/entities';
-import { GameGrid } from '@/shared/ui';
-import { ShipPlacementValidator } from '@/shared/utils';
-
+import { GameGrid } from '@/widgets';
+import { useMemo } from 'react';
 
 
 interface GameGridProps {
@@ -13,18 +12,28 @@ interface GameGridProps {
 }
 
 export function GameGridActive({onCellClick, title, battlefield, hidden = false}: GameGridProps) {
-  const rows = 10;
-  const cols = 10;
-  const validator = new ShipPlacementValidator(battlefield.field, rows, cols);
 
-  const onCellStatusGet = (x: number, y: number) => validator.getCellStatus(x, y);
+  const getCellStatus = useMemo(() => {
+    return (x: number, y: number) => {
+      const cell = battlefield.field[x][y];
+      return {
+        x: x,
+        y: y,
+        hasShip: cell.hasShip,
+        isHighlighted: false,
+        isValid: true,
+        isMissed: cell.isMissed,
+        isHit: cell.isHit
+      };
+    };
+  }, [battlefield.field]);
 
   return (
     <div 
       className={styles.gameGridActive}
     >
       <h2>{title}</h2>
-      <GameGrid onCellClick={onCellClick} getCellStatus={onCellStatusGet} hidden={hidden}/>
+      <GameGrid onCellClick={onCellClick} getCellStatus={getCellStatus} hidden={hidden}/>
     </div>
   );
 }
