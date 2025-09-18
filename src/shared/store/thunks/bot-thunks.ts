@@ -19,6 +19,10 @@ export const botAttack = () => {
       dispatch(fireOnMyCellWithLog(enemyBattlefield.userName, x, y));
     }
     
-    console.warn('Бот не смог найти клетку для атаки');
+    for (let x = 0; x<10; x++){
+      for (let y = 0; y<10; y++){
+        dispatch(fireOnMyCellWithLog(enemyBattlefield.userName, x, y));
+      }
+    }
   }
 };
