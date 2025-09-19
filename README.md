@@ -20,6 +20,7 @@
 - Сборка для production: `npm run build`
 - Просмотр собранной версии: `npm run preview`
 - Проверка типов TypeScript: `npm run type-check`
+- Запуск unit test: `npx vitest`
 
 ## Примечания
 - Убедитесь, что все зависимости успешно установились без ошибок
