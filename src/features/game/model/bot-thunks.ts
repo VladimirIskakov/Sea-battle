@@ -1,5 +1,5 @@
-import type { AppDispatch, RootState } from "../types/store";
-import { getRandomInt } from "../utils";
+import type { AppDispatch, RootState } from "../../../shared/store/types/store";
+import { getRandomInt } from "../../../shared/store/utils";
 import { fireOnMyCellWithLog } from "./game-thunks";
 
 export const botAttack = () => {

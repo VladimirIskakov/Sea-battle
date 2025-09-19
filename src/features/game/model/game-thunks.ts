@@ -1,10 +1,9 @@
 import { addLog, setMoveNow, toggleMove } from "@/entities/";
 import { fireOnEnemyCell, markCellsAsMissedForEnemy, destroyEnemyShip } from "@/entities";
 import { fireOnMyCell, markCellsAsMissedForMy, destroyMyShip } from "@/entities";
-import type { BattlefieldState, Cell, LogsType } from "../types";
-import { selectEnemyBattlefield, selectMovesStore, selectMyBattlefield, type AppDispatch, type RootState } from "../types/store";
+import type { BattlefieldState, Cell, LogsType } from "../../../shared/store/types";
+import { selectEnemyBattlefield, selectMovesStore, selectMyBattlefield, type AppDispatch, type RootState } from "../../../shared/store/types/store";
 
-// Вспомогательные функции для проверки условий
 export const canFireAtCell = (cell: Cell, moveNow: string | null, name: string | null): boolean => {
   if (cell.isHit || cell.isMissed) {
     console.log('В клетку уже стреляли');
@@ -98,7 +97,6 @@ export const createLogEntry = (
   }
 };
 
-// Основная логика выстрела
 export const fireOnCellWithLog = (
   name: string | null,
   x: number, 

@@ -1,7 +1,7 @@
 import { addLog, setMoveNow } from "@/entities";
 import { changeEnemyName, randomEnemyField } from "@/entities";
 import { changeMyName, changeMyReadyMode, changeEnemyReadyMode } from "@/entities";
-import type { AppDispatch, RootState } from "../types/store";
+import type { AppDispatch, RootState } from "../../../shared/store/types/store";
 
 export const prepareGame = () => {
   return (dispatch: AppDispatch, getState: () => RootState) => {

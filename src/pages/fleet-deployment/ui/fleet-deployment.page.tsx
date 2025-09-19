@@ -1,17 +1,16 @@
-import { GameGridPlacement } from '@/features/fleet-deployment/ship-field-placement';
-import { ShipDnd } from '@/features';
+import { GameGridPlacement } from '@/features/fleet-deployment/ui/ship-field-placement';
 import styles from './fleet-deployment.module.scss'
 import { useState, useEffect } from 'react';
 import { CustomButton } from '@/shared/ui';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { 
-  prepareGame, 
   selectEnemyBattlefield, 
   selectMyBattlefield, 
   useAppDispatch,
  } from '@/shared/store';
 import { placeMyShip, randomMyField, resetMyGame } from '@/entities';
+import { prepareGame, ShipDnd} from '@/features/fleet-deployment';
 
 
 export function FleetDeployment() {

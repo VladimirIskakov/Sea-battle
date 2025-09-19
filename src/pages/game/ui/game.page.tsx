@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { GameGridActive } from "@/features";
 import { GameLogs} from "./game-logs"; 
 import styles from './game.page.module.scss';
-import { botAttack, fireOnEnemyCellWithLog, selectEnemyBattlefield, selectMyBattlefield, useAppDispatch } from '@/shared/store';
+import {  selectEnemyBattlefield, selectMyBattlefield, useAppDispatch } from '@/shared/store';
 import { selectMovesStore } from '@/shared/store/types/store';
+import { botAttack, fireOnEnemyCellWithLog, GameGridActive } from '@/features/game';
 
 export function Game() {
   const myBattlefield = useSelector(selectMyBattlefield);
