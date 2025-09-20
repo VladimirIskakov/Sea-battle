@@ -31,6 +31,7 @@ export function GameGridActive({onCellClick, title, battlefield, hidden = false}
   return (
     <div 
       className={styles.gameGridActive}
+      data-testid="game-grid-active"
     >
       <h2>{title}</h2>
       <GameGrid onCellClick={onCellClick} getCellStatus={getCellStatus} hidden={hidden}/>

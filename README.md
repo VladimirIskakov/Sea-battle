@@ -21,6 +21,7 @@
 - Просмотр собранной версии: `npm run preview`
 - Проверка типов TypeScript: `npm run type-check`
 - Запуск unit test: `npx vitest`
+- Запустить e2e cypress тесты: `npx cypress run`
 
 ## Примечания
 - Убедитесь, что все зависимости успешно установились без ошибок

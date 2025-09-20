@@ -7,6 +7,11 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider } from 'react-redux'
 import { store } from './shared/store/index.ts'
 
+if (process.env.NODE_ENV === 'development') {
+  // @ts-ignore
+  window.store = store;
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DndProvider backend={HTML5Backend}>

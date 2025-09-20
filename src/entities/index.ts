@@ -1,5 +1,8 @@
-export { placeMyShip, 
-  resetMyGame, fireOnMyCell, 
+export { 
+  setMyBattlefield,
+  placeMyShip, 
+  resetMyGame, 
+  fireOnMyCell, 
   randomMyField, 
   changeMyReadyMode, 
   markCellsAsMissedForMy, 
@@ -8,6 +11,7 @@ export { placeMyShip,
 } from './battlefield/my-battlefield.slice';
 
 export { 
+  setEnemyBattlefield,
   placeEnemyShip, 
   resetEnemyGame, 
   fireOnEnemyCell, 

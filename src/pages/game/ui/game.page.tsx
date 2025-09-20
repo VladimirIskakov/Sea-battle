@@ -7,6 +7,7 @@ import styles from './game.page.module.scss';
 import {  selectEnemyBattlefield, selectMyBattlefield, useAppDispatch } from '@/shared/store';
 import { selectMovesStore } from '@/shared/store/types/store';
 import { botAttack, fireOnEnemyCellWithLog, GameGridActive } from '@/features/game';
+import { setEnemyBattlefield, setMoveNow, setMyBattlefield } from '@/entities';
 
 export function Game() {
   const myBattlefield = useSelector(selectMyBattlefield);
@@ -15,6 +16,24 @@ export function Game() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Чтение данных из localStorage и обновление store
+    const myBattlefieldData = localStorage.getItem('myBattlefield');
+    if (myBattlefieldData) {
+      dispatch(setMyBattlefield(JSON.parse(myBattlefieldData)));
+    }
+
+    const enemyBattlefieldData = localStorage.getItem('enemyBattlefield');
+    if (enemyBattlefieldData) {
+      dispatch(setEnemyBattlefield(JSON.parse(enemyBattlefieldData)));
+    }
+
+    const movesStoreData = localStorage.getItem('movesStore');
+    if (movesStoreData) {
+      dispatch(setMoveNow(JSON.parse(movesStoreData)));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const checkReadiness = () => {

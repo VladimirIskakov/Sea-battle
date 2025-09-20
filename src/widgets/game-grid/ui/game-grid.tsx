@@ -28,6 +28,7 @@ export function GameGrid({onCellClick, getCellStatus, hidden = false, handleDrag
   return (
     <div 
       className={styles.grid}
+      
     >
       
       {/* Заголовок с буквами */}

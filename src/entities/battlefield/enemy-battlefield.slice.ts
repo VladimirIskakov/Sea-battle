@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { initialRandomState, createInitialState } from '@/shared/store/utils';
+import type { BattlefieldState } from '@/shared/store';
 
 export const enemyBattlefield = createSlice({
   name: 'enemyBattlefield',
   initialState: initialRandomState(),
   reducers: {
+    setBattlefield: (state, action: PayloadAction<BattlefieldState>) => {
+      return action.payload;
+    },
     changeName: (state, action: PayloadAction<{name: string}>) => {
         state.userName = action.payload.name
     },
@@ -60,6 +64,7 @@ export const enemyBattlefield = createSlice({
 });
 
 export const { 
+  setBattlefield: setEnemyBattlefield,
   placeShip: placeEnemyShip, 
   resetGame: resetEnemyGame, 
   randomField: randomEnemyField, 
