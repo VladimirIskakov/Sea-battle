@@ -7,7 +7,7 @@ export const enemyBattlefield = createSlice({
   name: 'enemyBattlefield',
   initialState: initialRandomState(),
   reducers: {
-    setBattlefield: (state, action: PayloadAction<BattlefieldState>) => {
+    setBattlefield: (_state, action: PayloadAction<BattlefieldState>) => {
       return action.payload;
     },
     changeName: (state, action: PayloadAction<{name: string}>) => {
