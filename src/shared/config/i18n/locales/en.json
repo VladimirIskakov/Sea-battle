@@ -1,0 +1,20 @@
+{
+  "welcome": "Welcome to the Sea Battle!",
+  "singlePlayer": "Single Player",
+  "throwOff": "Reset",
+  "randomLocation": "Random Placement",
+  "startGame": "Start",
+  "noLogs": "No logs yet",
+  "SeaBattle": "Sea Battle",
+  "field": "Field",
+  "logs": {
+    "ready": "{{player}} is ready",
+    "alreadyFired": "This cell was already fired at",
+    "destroyed": "Destroyed a ship of length {{length}} at cell {{cell}}!",
+    "hit": "Hit cell {{cell}}",
+    "miss": "Shot at cell {{cell}} - miss",
+    "victoryEnemy": "{{enemy}} won",
+    "victoryMe": "{{me}} won",
+    "shipPlaced": "Ship of length {{length}} placed at cell {{cell}} with direction {{direction}}. Valid: {{valid}}"
+  }
+}

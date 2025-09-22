@@ -1,0 +1,20 @@
+{
+  "welcome": "Добро пожаловать в Морской Бой!",
+  "singlePlayer": "Одиночная игра",
+  "throwOff": "Сбросить",
+  "randomLocation": "Случайное расположение",
+  "startGame": "Начать",
+  "noLogs": "Логов пока нет",
+  "SeaBattle": "Морской бой",
+  "field": "Поле",
+  "logs": {
+    "ready": "{{player}} готов",
+    "alreadyFired": "В клетку уже стреляли",
+    "destroyed": "Уничтожил корабль длиной {{length}} в клетке {{cell}}!",
+    "hit": "Попал в клетку {{cell}}",
+    "miss": "Выстрел в клетку {{cell}} - мимо",
+    "victoryEnemy": "{{enemy}} победил",
+    "victoryMe": "{{me}} победил",
+    "shipPlaced": "Корабль длиной {{length}} помещен в клетку {{cell}} с направлением {{direction}}. Валидность: {{valid}}"
+  }
+}
