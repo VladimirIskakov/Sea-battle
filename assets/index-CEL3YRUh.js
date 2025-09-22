@@ -68,7 +68,7 @@ Please change the parent <Route path="${Y}"> to <Route path="${Y==="/"?"*":`${Y}
     ${bf[`ship__type${a}`]}
     ${u==="horizontal"?bf.ship_horizontal:""}
     ${c}
-  `.trim();return k.jsx("div",{className:f})},tS="_menu_1xtsh_1",nS="_menu__title_1xtsh_13",lS="_menu__buttons_1xtsh_18",aS="_menu__button_1xtsh_18",_i={menu:tS,menu__title:nS,menu__buttons:lS,menu__button:aS};function uS(){const a=Yi(),u=()=>{console.log("Запуск одиночной игры"),a("/fleetdep")};return k.jsx("div",{className:_i.menu,children:k.jsxs("div",{className:_i.menu__buttons,children:[k.jsx("h1",{className:_i.menu__title,children:"Добро пожаловать в Морской Бой!"}),k.jsx(Mi,{view:"primary",size:"l",onClick:u,className:_i.menu__button,children:"Одиночная игра"})]})})}var Ef={exports:{}},Tf={};/**
+  `.trim();return k.jsx("div",{className:f})},tS="_menu_1kst9_1",nS="_menu__title_1kst9_13",lS="_menu__buttons_1kst9_18",aS="_menu__button_1kst9_18",_i={menu:tS,menu__title:nS,menu__buttons:lS,menu__button:aS};function uS(){const a=Yi(),u=()=>{console.log("Запуск одиночной игры"),a("/fleetdep")};return k.jsx("div",{className:_i.menu,children:k.jsxs("div",{className:_i.menu__buttons,children:[k.jsx("h1",{className:_i.menu__title,children:"Добро пожаловать в Морской Бой!"}),k.jsx(Mi,{view:"primary",size:"l",onClick:u,className:_i.menu__button,children:"Одиночная игра"})]})})}var Ef={exports:{}},Tf={};/**
  * @license React
  * use-sync-external-store-with-selector.production.js
  *
