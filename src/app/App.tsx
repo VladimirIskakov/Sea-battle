@@ -3,7 +3,7 @@ import { Menu, Game, FleetDeployment} from '@/pages';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Sea-battle/">
       <div className="app">
         <Routes>
           <Route path="/" element={<Menu />} />
