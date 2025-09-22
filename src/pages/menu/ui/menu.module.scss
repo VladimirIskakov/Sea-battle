@@ -7,8 +7,9 @@
   justify-content: center;
   padding: 80px 20px 80px 20px;
   text-align: center;
-  background-color: rgba(165, 207, 224, 0.492);
+  background-color: rgba(165, 207, 224, 0.668);
   border-radius: 2%;
+  position: relative;
 
   &__title {
     margin-bottom: 40px;
@@ -31,7 +32,7 @@
   @media (max-width: 480px) {
     width: 100%;        
     height: auto;      
-    padding: 40px 10px;   
+    padding: 60px 10px;   
 
     &__title {
       font-size: 1.8rem;

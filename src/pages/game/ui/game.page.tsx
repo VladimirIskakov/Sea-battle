@@ -8,8 +8,10 @@ import {  selectEnemyBattlefield, selectMyBattlefield, useAppDispatch } from '@/
 import { selectMovesStore } from '@/shared/store/types/store';
 import { botAttack, fireOnEnemyCellWithLog, GameGridActive } from '@/features/game';
 import { setEnemyBattlefield, setMoveNow, setMyBattlefield } from '@/entities';
+import { useTranslation } from 'react-i18next';
 
 export function Game() {
+  const { t } = useTranslation();
   const myBattlefield = useSelector(selectMyBattlefield);
   const enemyBattlefield = useSelector(selectEnemyBattlefield);
   const moveStage = useSelector(selectMovesStore)
@@ -18,7 +20,6 @@ export function Game() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Чтение данных из localStorage и обновление store
     const myBattlefieldData = localStorage.getItem('myBattlefield');
     if (myBattlefieldData) {
       dispatch(setMyBattlefield(JSON.parse(myBattlefieldData)));
@@ -58,10 +59,10 @@ export function Game() {
 
   return (
     <div className={styles.gamePage}>
-      <h1>Морской бой</h1>
+      <h1>{t("SeaBattle")}</h1>
       <div className={styles.gamePage__gameGrid}>
-        <GameGridActive battlefield={myBattlefield} title={`Поле ${myBattlefield.userName}`}/>
-        <GameGridActive onCellClick={attackEnemy} battlefield={enemyBattlefield} hidden={true} title={`Поле ${enemyBattlefield.userName}`}/>
+        <GameGridActive battlefield={myBattlefield} title={`${t("field")} ${myBattlefield.userName}`}/>
+        <GameGridActive onCellClick={attackEnemy} battlefield={enemyBattlefield} hidden={true} title={`${t("field")} ${enemyBattlefield.userName}`}/>
       </div>
       <GameLogs />
     </div>

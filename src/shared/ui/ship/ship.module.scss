@@ -3,24 +3,40 @@
 .ship {
   border: 2px solid #000;
   transition: all 0.3s ease;
-  
+
   $ship-colors: #9534db, #2ecc71, #e73cd9, #f39c12;
-  
-  // Вертикальная ориентация (по умолчанию)
+
   @for $i from 1 through 4 {
     &__type#{$i} {
       width: 30px;
       height: 30px * $i;
-      background-color: list.nth($ship-colors, $i);
+
+      $color: list.nth($ship-colors, $i);
+
+      background: linear-gradient(
+        to right,
+        lighten($color, 15%),
+        $color,
+        darken($color, 15%)
+      );
+
+      border: 2px solid darken($color, 25%);
     }
   }
-  
-  // Горизонтальная ориентация
+
   &_horizontal {
     @for $i from 1 through 4 {
       &.ship__type#{$i} {
         width: 30px * $i;
         height: 30px;
+
+        $color: list.nth($ship-colors, $i);
+        background: linear-gradient(
+          to right,
+          lighten($color, 15%),
+          $color,
+          darken($color, 15%)
+        );
       }
     }
   }
