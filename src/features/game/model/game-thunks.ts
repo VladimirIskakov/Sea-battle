@@ -3,10 +3,11 @@ import { fireOnEnemyCell, markCellsAsMissedForEnemy, destroyEnemyShip } from "@/
 import { fireOnMyCell, markCellsAsMissedForMy, destroyMyShip } from "@/entities";
 import type { BattlefieldState, Cell, LogsType } from "../../../shared/store/types";
 import { selectEnemyBattlefield, selectMovesStore, selectMyBattlefield, type AppDispatch, type RootState } from "../../../shared/store/types/store";
+import i18n from "@/app/providers/i18n/config";
 
 export const canFireAtCell = (cell: Cell, moveNow: string | null, name: string | null): boolean => {
   if (cell.isHit || cell.isMissed) {
-    console.log('В клетку уже стреляли');
+    console.log(i18n.t("logs.alreadyFired"));
     return false;
   }
 
@@ -81,17 +82,24 @@ export const createLogEntry = (
 
   if (wasDestroyed) {
     return {
-      log: `Уничтожил корабль длиной ${cell.hasShip} в клетке ${colLetter}${y + 1}!`,
+      log: i18n.t("logs.destroyed", { 
+        length: cell.hasShip, 
+        cell: `${colLetter}${y + 1}` 
+      }),
       type: logType
     };
   } else if (wasHit) {
     return {
-      log: `Попал в клетку ${colLetter}${y + 1}`,
+      log: i18n.t("logs.hit", {  
+        cell: `${colLetter}${y + 1}`
+      }),
       type: logType
     };
   } else {
     return {
-      log: `Выстрел в клетку ${colLetter}${y + 1} - мимо`,
+      log: i18n.t("logs.miss", {  
+        cell: `${colLetter}${y + 1}`
+      }),
       type: logType
     };
   }
@@ -177,16 +185,20 @@ export const fireOnMyCellWithLog = (name: string | null, x: number, y: number) =
 // Функции для управления ходами и победой
 export const declareVictory = () => {
   return (dispatch: AppDispatch, getState: () => RootState) => {
-    console.log('проверка условия победы')
+    console.log(i18n.t("logs.checkVictory"))
     const state = getState();
     if (state.myBattlefield.numberShips === 0) {
       dispatch(addLog({
-        log: `${state.enemyBattlefield.userName} победил`,
+        log: i18n.t("logs.victoryEnemy", {  
+          enemy: `${state.enemyBattlefield.userName}`
+        }),
         type: '_win'
       }));
     } else if (state.enemyBattlefield.numberShips === 0) {
       dispatch(addLog({
-        log: `${state.myBattlefield.userName} победил`,
+        log: i18n.t("logs.victoryMe", {  
+          me: `${state.myBattlefield.userName}`
+        }),
         type: '_win'
       }));
     }

@@ -2,6 +2,7 @@ import { addLog, setMoveNow } from "@/entities";
 import { changeEnemyName, randomEnemyField } from "@/entities";
 import { changeMyName, changeMyReadyMode, changeEnemyReadyMode } from "@/entities";
 import type { AppDispatch, RootState } from "../../../shared/store/types/store";
+import i18n from "@/app/providers/i18n/config";
 
 export const prepareGame = () => {
   return (dispatch: AppDispatch, getState: () => RootState) => {
@@ -13,14 +14,15 @@ export const prepareGame = () => {
 
     const state = getState();
     
-    dispatch(setMoveNow({name: state.myBattlefield.userName}))
+    dispatch(setMoveNow({ name: state.myBattlefield.userName }));
 
+    // Логи через i18n
     dispatch(addLog({ 
-      log: `${state.myBattlefield.userName} готов`, 
+      log: i18n.t("logs.ready", { player: state.myBattlefield.userName }),
       type: '_common' 
     }));
     dispatch(addLog({ 
-      log: `${state.enemyBattlefield.userName} готов`, 
+      log: i18n.t("logs.ready", { player: state.enemyBattlefield.userName }),
       type: '_common' 
     }));
   };
