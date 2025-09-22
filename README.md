@@ -24,5 +24,6 @@
 - Запустить e2e cypress тесты: `npx cypress run`
 
 ## Примечания
+- приложение расположенно на git pages, где его можно и потыкать https://vladimiriskakov.github.io/Sea-battle/
 - Убедитесь, что все зависимости успешно установились без ошибок
 - При возникновении проблем удалите папку `node_modules` и файл `package-lock.json`, затем выполните `npm install` повторно
